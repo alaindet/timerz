@@ -1,7 +1,42 @@
 :root {
   --tmz-color-background: #242424;
+  --tmz-color-background-alt: #4a4a4a;
   --tmz-color-text: rgba(255, 255, 255, 0.87);
+  --tmz-color-text-muted: rgba(255, 255, 255, 0.5);
+  --tmz-color-green: #2b9c45;
+  --tmz-color-green-text: white;
+  --tmz-color-blue: #3757c0;
+  --tmz-color-blue-text: white;
+  --tmz-color-red: #b93535;
+  --tmz-color-red-text: white;
+  --tmz-color-aquamarine: #4bc6b5;
+  --tmz-color-aquamarine-text: black;
+  --tmz-color-purple: #8344a2;
+  --tmz-color-purple-text: white;
+  --tmz-color-yellow: #e3d73a;
+  --tmz-color-yellow-text: black;
+}
 
+:root[data-theme="light"] {
+  --tmz-color-background: #ffffff;
+  --tmz-color-background-alt: #e0e0e0;
+  --tmz-color-text: #213547;
+  --tmz-color-text-muted: #434c53;
+  --tmz-color-green: #000100;
+  --tmz-color-green-text: white;
+  --tmz-color-blue: #1e46c7;
+  --tmz-color-blue-text: white;
+  --tmz-color-red: #d51212;
+  --tmz-color-red-text: white;
+  --tmz-color-aquamarine: #4eddca;
+  --tmz-color-aquamarine-text: black;
+  --tmz-color-purple: #7917a9;
+  --tmz-color-purple-text: white;
+  --tmz-color-yellow: #eadd21;
+  --tmz-color-yellow-text: black;
+}
+
+:root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -16,17 +51,8 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    --tmz-color-background: #ffffff;
-    --tmz-color-text: #213547;
-  }
-}
-
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
 }

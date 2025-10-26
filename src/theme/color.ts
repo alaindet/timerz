@@ -1,0 +1,12 @@
+export const THEME_COLOR_NAME = {
+  GREEN: 'Green',
+  BLUE: 'Blue',
+  RED: 'Red',
+  AQUAMARINE: 'Aquamarine',
+  PURPLE: 'Purple',
+  YELLOW: 'Yellow',
+} as const;
+
+export type ThemeColorName = typeof THEME_COLOR_NAME[
+  keyof typeof THEME_COLOR_NAME
+];
