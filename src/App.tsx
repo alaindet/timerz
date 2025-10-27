@@ -3,30 +3,29 @@ import { useEffect } from 'react';
 import './App.css';
 import { useColorScheme } from './hooks';
 import { COLOR_SCHEME } from './theme/color-scheme';
-import { ThemeSwitcher } from './components/theme-switcher/theme-switcher';
+import { AppHeader } from './components/app-header/app-header';
+import { AppTimers } from './components/app-timers/app-timers';
 
 export default function App() {
   const colorScheme = useColorScheme(COLOR_SCHEME.DARK);
 
-  useEffect(function setColorSchemeToDom() {
-    if (!document) return;
-    document.documentElement.setAttribute('data-theme', colorScheme.value);
+  useEffect(function syncColorSchemeWithDom() {
+    if (document) {
+      document.documentElement.setAttribute('data-theme', colorScheme.value);  
+    }
   }, [colorScheme.value]);
 
   return (
     <div className="app">
       <header>
-        <h1 className="app-title">Timerz</h1>
-        <div className="header-controls">
-          <ThemeSwitcher
-            value={colorScheme.option}
-            onChange={colorScheme.select}
-          />
-        </div>
+        <AppHeader
+          colorScheme={colorScheme.option}
+          onColorSchemeChange={colorScheme.select}
+        />
       </header>
       <main>
-        <p>TODO: Content here</p>
+        <AppTimers max={4} />
       </main>
     </div>
-  )
+  );
 }

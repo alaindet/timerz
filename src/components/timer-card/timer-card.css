@@ -1,0 +1,7 @@
+.timer-card {
+  border: 2px solid currentColor;
+  border-radius: 1rem;
+  padding: 2rem;
+  display: grid;
+  place-items: center;
+}

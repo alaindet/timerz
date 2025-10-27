@@ -1,0 +1,53 @@
+.timer-card-empty {
+  --_color-background: var(--tmz-color-background);
+  --_color-text: var(--tmz-color-text);
+
+  background-color: var(--_color-background);
+  color: var(--_color-text);
+  border: 2px solid currentColor;
+  border-radius: 0.5rem;
+  padding: 2rem;
+  display: grid;
+  place-items: center;
+  position: relative;
+  transition: 0.1s all ease-in-out;
+}
+
+.timer-card-empty:hover {
+  --_color-background: var(--tmz-color-background-alt);
+  --_color-text: var(--tmz-color-text);
+}
+
+:root[data-theme="dark"] .timer-card-empty {
+  --_color-background: transparent;
+  --_color-text: rgba(255, 255, 255, 0.4);
+}
+
+:root[data-theme="dark"] .timer-card-empty:hover {
+  --_color-background: rgba(0, 0, 0, 0.2);
+  --_color-text: white;
+}
+
+.timer-card-empty h2 {
+  margin: 0;
+  margin-bottom: 1rem;
+}
+
+.timer-card-empty button {
+  width: 5rem;
+  height: 5rem;
+  background-color: transparent;
+  border: 2px solid currentColor;
+  color: var(--color-text);
+  display: flex;
+  border-radius: 500px;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.timer-card-empty button:before {
+  content: ' ';
+  position: absolute;
+  inset: 0;
+}

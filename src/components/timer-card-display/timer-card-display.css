@@ -1,0 +1,43 @@
+.timer-card-display {
+  border: 2px solid white;
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.timer-card-display__header {
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 1rem;
+  margin-bottom: 0.5rem;
+  gap: 0.5rem;
+  border-bottom: 2px solid white;
+}
+
+.timer-card-display__content {
+
+}
+
+.timer-card-display__title {
+
+}
+
+.timer-card-display__digits {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.timer-card-display_digits-separator {
+  width: auto;
+  height: 100%;
+  padding: 1rem;
+  display: flex;
+  place-items: center;
+  font-size: 5rem;
+}
+
+.timer-card-display__digits > * {
+  width: 100%;
+}
