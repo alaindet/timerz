@@ -226,10 +226,10 @@ export function TimerCardForm({
                   className="color-option"
                 >
                   <div
-                    className="color-option-swatch"
-                    style={{
-                      '--_color-bg': `var(--tmz-color-${color.toLowerCase()})`,
-                    }}
+                    className={clsx(
+                      'color-option-swatch',
+                      `--${color.toLowerCase()}`
+                    )}
                   ></div>
                   {color}
                 </RadioButtonGroup.Option>
