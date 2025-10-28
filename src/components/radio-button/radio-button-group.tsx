@@ -7,6 +7,7 @@
  *   options (the selected is 0, others are -1)
  */
 import { useCallback, type PropsWithChildren, Children, isValidElement } from 'react';
+import clsx from 'clsx';
 
 import './radio-button-group.css';
 import { RadioButtonGroupContext, type RadioButtonGroupContextType } from './context';
@@ -16,15 +17,19 @@ import { __RadioButtonGroupOption } from './radio-button-group-option';
 export type RadionButtonGroupProps = PropsWithChildren & {
   id: string;
   value?: string | null;
+  stacked?: string | boolean;
   onChange: (option: string) => void;
 };
 
 export function RadioButtonGroup({
   id,
   value = null,
+  stacked: propStacked,
   onChange,
   children,
 }: RadionButtonGroupProps) {
+
+  const stacked = !!propStacked || propStacked === '';
 
   const select = useCallback(
     (newValue: string) => onChange(newValue),
@@ -49,7 +54,7 @@ export function RadioButtonGroup({
   return (
     <RadioButtonGroupContext.Provider value={context}>
       <div
-        className="radio-button-group"
+        className={clsx('radio-button-group', { '--stacked': stacked })}
         role="radiogroup"
         aria-labelledby={context.titleId}
       >

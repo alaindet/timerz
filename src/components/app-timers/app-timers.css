@@ -1,17 +1,19 @@
 .app-timers {
-  --app-timer-columns: 1fr 1fr;
-
   display: grid;
   gap: 1rem;
-  grid-template-columns: var(--app-timer-columns);
+  grid-template-columns: 1fr 1fr;
+}
+
+.app-timers .--maximize-timer {
+  grid-column: 1 / 3;
 }
 
 .app-timers.--one-child {
-  --app-timers-columns: 1fr;
+  grid-template-columns: 1fr;
 }
 
 @media (max-width: 600px) {
   .app-timers {
-    --app-timers-columns: 1fr;
+    grid-template-columns: 1fr;
   }
 }

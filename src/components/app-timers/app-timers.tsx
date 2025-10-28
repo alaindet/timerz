@@ -1,11 +1,11 @@
-import { useState } from 'react';
 import clsx from 'clsx';
+import { useCallback, useState } from 'react';
 
-import './app-timers.css';
-import type { Timer } from '../../types';
-import { TimerCardEmpty } from '../timer-card-empty/timer-card-empty';
 import { createEmptyTimer } from '../../functions';
+import type { TimerConfig } from '../../types';
+import { TimerCardEmpty } from '../timer-card-empty/timer-card-empty';
 import { TimerCard } from '../timer-card/timer-card';
+import './app-timers.css';
 
 export type AppTimersProps = {
   max: number;
@@ -14,64 +14,36 @@ export type AppTimersProps = {
 export function AppTimers({
   max,
 }: AppTimersProps) {
-  const [timers, setTimers] = useState<Timer[]>([
-    {
-      name: 'Magic',
-      minutes: 60,
-      color: 'Green',
-      id: '123456789',
-      elapsedSeconds: 0,
-      isRunning: false,
-    },
-  ]);
+  const [timers, setTimers] = useState<TimerConfig[]>([]);
 
-  function handleCreateTimer() {
-    if (timers.length >= max) return;
-    const timer = createEmptyTimer();
-    setTimers(prev => [...prev, timer]);
-  }
+  const handleCreateEmptyTimer = useCallback(() => {
+    setTimers(prev => [...prev, createEmptyTimer()]);
+  }, [timers]);
 
-  function handleRemoveTimer(timerId: Timer['id']) {
-    console.log('handleRemoveTimer', timerId);
-    setTimers(prev => prev.filter(t => t.id === timerId));
-  }
+  const handleRemoveTimer = useCallback((timerId: TimerConfig['id']) => {
+    setTimers(prev => prev.filter(t => t.id !== timerId));
+  }, []);
 
-  function handleUpdateTimer(timer: Timer) {
-    console.log('handleUpdateTimer', timer);
+  const handleUpdateTimer = useCallback((timer: TimerConfig) => {
     setTimers(prev => prev.map(t => t.id === timer.id ? timer : t));
-  }
-
-  function handlePlayTimer(timerId: Timer['id']) {
-    console.log('handlePlayTimer', timerId);
-  }
-
-  function handlePauseTimer(timerId: Timer['id']) {
-    console.log('handlePauseTimer', timerId);
-  }
-
-  function handleSaveTimer(timer: Timer) {
-    console.log('handleSaveTimer', timer);
-  }
+  }, []);
 
   return (
     <div className={clsx(
       'app-timers',
-      { '--one-child': timers.length === 1 },
+      { '--one-child': timers.length <= 1 },
     )}>
-
       {timers.map(timer => (
         <TimerCard
           key={timer.id}
-          timer={timer}
-          onPlay={handlePlayTimer}
-          onPause={handlePauseTimer}
-          onSave={handleSaveTimer}
+          config={timer}
+          onUpdate={handleUpdateTimer}
           onRemove={handleRemoveTimer}
         />
       ))}
 
       {timers.length < max && (
-        <TimerCardEmpty onClick={handleCreateTimer} />
+        <TimerCardEmpty onClick={handleCreateEmptyTimer} />
       )}
     </div>
   );

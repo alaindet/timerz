@@ -1,0 +1,15 @@
+.seven-segments-digit {
+
+  path[data-digital-segment] {
+    stroke: var(--seven-segments-digit-background, var(--tmz-color-background, white));
+  }
+
+  path[data-digital-segment][data-state="on"] {
+    fill: var(--seven-segments-digit-on, var(--tmz-color-text, black));
+  }
+
+  path[data-digital-segment][data-state="off"] {
+    fill: var(--seven-segments-digit-off, var(--tmz-color-background-alt, #e0e0e0));
+    fill-opacity: var(--seven-segments-digit-off-opacity, 1);
+  }
+}

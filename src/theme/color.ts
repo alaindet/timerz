@@ -2,7 +2,7 @@ export const THEME_COLOR_NAME = {
   GREEN: 'Green',
   BLUE: 'Blue',
   RED: 'Red',
-  AQUAMARINE: 'Aquamarine',
+  TEAL: 'Teal',
   PURPLE: 'Purple',
   YELLOW: 'Yellow',
 } as const;

@@ -4,6 +4,20 @@
   padding: 1rem;
 }
 
+.timer-card-display.--running.--expired .timer-card-display__digits {
+  animation: pulseAnimation 1s linear infinite;
+}
+
+.timer-card-display.--running .timer-card-display__digits-separator {
+  animation: pulseAnimation 1s linear infinite;
+}
+
+@keyframes pulseAnimation {
+  0% { opacity: 0 }
+  50% { opacity: 1 }
+  100% { opacity: 0 }
+}
+
 .timer-card-display__header {
   display: flex;
   justify-content: flex-end;
@@ -13,12 +27,10 @@
   border-bottom: 2px solid white;
 }
 
-.timer-card-display__content {
-
-}
-
 .timer-card-display__title {
-
+  text-align: center;
+  margin: 0;
+  font-family: monospace;
 }
 
 .timer-card-display__digits {
@@ -27,15 +39,18 @@
   justify-content: center;
   gap: 1rem;
   padding: 1rem;
+  position: relative;
 }
 
-.timer-card-display_digits-separator {
-  width: auto;
-  height: 100%;
+.timer-card-display__digits-separator {
   padding: 1rem;
   display: flex;
-  place-items: center;
-  font-size: 5rem;
+  align-items: center;
+  justify-content: center;
+  font-size: 4.5em;
+  line-height: 4.5em;
+  width: 2rem !important;
+  height: 4.5rem;
 }
 
 .timer-card-display__digits > * {

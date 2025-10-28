@@ -1,16 +1,21 @@
 import { useContext, type PropsWithChildren } from 'react';
+import clsx from 'clsx';
 
 import { RadioButtonGroupContext } from './context';
 
 export type RadioButtonGroupOptionProps = PropsWithChildren & {
   id: string;
-  value: string,
+  value: string;
+  style?: Object;
+  className?: string;
 };
 
 export function __RadioButtonGroupOption({
   id,
   value,
-  children
+  children,
+  style,
+  className,
 }: RadioButtonGroupOptionProps) {
   const context = useContext(RadioButtonGroupContext)!;
 
@@ -26,10 +31,11 @@ export function __RadioButtonGroupOption({
     <button
       type="button"
       role="radio"
+      style={style}
       aria-checked={ariaChecked}
       tabIndex={0}
       id={optionId}
-      className="radio-button-group__option"
+      className={clsx('radio-button-group__option', className)}
       onClick={handleSelectOption}
     >
       {children}

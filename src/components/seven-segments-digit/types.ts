@@ -15,5 +15,5 @@ export type SevenSegmentsState = [
 export type SevenSegmentsSegmentState = {
   name: SevenSegmentsName;
   path: string;
-  color: string;
+  isActive: boolean;
 };

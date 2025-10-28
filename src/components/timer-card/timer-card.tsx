@@ -1,36 +1,43 @@
 import { useCallback, useState } from 'react';
 
-import type { Timer } from '../../types';
-import { TimerCardForm } from '../timer-card-form/timer-card-form';
-import { TimerCardDisplay } from '../timer-card-display/timer-card-display';
 import { isTimerEmpty } from '../../functions';
+import { type TimerConfig } from '../../types';
+import { TimerCardDisplay } from '../timer-card-display/timer-card-display';
+import { TimerCardForm } from '../timer-card-form/timer-card-form';
 
 export type TimerCardProps = {
-  timer: Timer;
-  onPlay: (timerId: Timer['id']) => void;
-  onPause: (timerId: Timer['id']) => void;
-  onSave: (timer: Timer) => void;
-  onRemove: (timerId: Timer['id']) => void;
+  config: TimerConfig;
+  onUpdate: (timer: TimerConfig) => void;
+  onRemove: (timerId: TimerConfig['id']) => void;
 };
 
-export function TimerCard({
-  timer,
-  onPlay,
-  onPause,
-  onSave,
-  onRemove,
-}: TimerCardProps) {
-  const [isEditing, setIsEditing] = useState(isTimerEmpty(timer));
+export function TimerCard(props: TimerCardProps) {
+  const [isEditing, setIsEditing] = useState(isTimerEmpty(props.config));
+  const [isMaximized, setIsMaximized] = useState(false);
 
-  const handleSaveTimer = useCallback((timer: Timer) => {
-    onSave(timer);
+  const onRemove = useCallback(
+    () => props.onRemove(props.config.id),
+    [props.config],
+  );
+
+  const handleStartEditing = useCallback(() => setIsEditing(true), []);
+  const handleCancelEditing = useCallback(() => setIsEditing(false), []);
+  const handleMaximizeSize = useCallback(() => setIsMaximized(true), []);
+  const handleCompressSize = useCallback(() => setIsMaximized(false), []);
+
+  const handleSaveTimer = useCallback((config: TimerConfig) => {
+    props.onUpdate(config);
     setIsEditing(false);
-  }, [onSave, setIsEditing]);
+  }, [props.onUpdate]);
 
   if (isEditing) {
     return (
       <TimerCardForm
-        timer={timer}
+        config={props.config}
+        isMaximized={isMaximized}
+        onMaximizeSize={handleMaximizeSize}
+        onCompressSize={handleCompressSize}
+        onCancelEditing={handleCancelEditing}
         onSave={handleSaveTimer}
         onRemove={onRemove}
       />
@@ -39,9 +46,11 @@ export function TimerCard({
 
   return (
     <TimerCardDisplay
-      timer={timer}
-      onPlay={onPlay}
-      onPause={onPause}
+      config={props.config}
+      isMaximized={isMaximized}
+      onMaximizeSize={handleMaximizeSize}
+      onCompressSize={handleCompressSize}
+      onStartEditing={handleStartEditing}
       onRemove={onRemove}
     />
   );

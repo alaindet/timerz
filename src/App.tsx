@@ -11,7 +11,7 @@ export default function App() {
 
   useEffect(function syncColorSchemeWithDom() {
     if (document) {
-      document.documentElement.setAttribute('data-theme', colorScheme.value);  
+      document.documentElement.setAttribute('data-theme', colorScheme.value);
     }
   }, [colorScheme.value]);
 
@@ -24,7 +24,7 @@ export default function App() {
         />
       </header>
       <main>
-        <AppTimers max={4} />
+        <AppTimers max={8} />
       </main>
     </div>
   );
