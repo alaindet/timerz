@@ -1,6 +1,6 @@
+import clsx from 'clsx';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { FaCompress, FaExpand, FaPause, FaPen, FaPlay, FaTrashCan } from 'react-icons/fa6';
-import clsx from 'clsx';
 
 import { splitDigits } from '../../functions';
 import type { TimerConfig } from '../../types';
@@ -26,16 +26,21 @@ export function TimerCardDisplay({
 }: TimerCardDisplayProps) {
   const [elapsed, setElapsed] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
-  const intervalIdRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   const isExpired = useMemo(() => {
     const totalSeconds = config.minutes * 60;
     return totalSeconds - elapsed <= 0;
   }, [config, elapsed]);
 
-  function handlePause() {
-    if (intervalIdRef.current !== null) {
-      clearInterval(intervalIdRef.current);
+  function killTimeout() {
+    if (timeoutRef.current !== null) {
+      clearTimeout(timeoutRef.current);
     }
+  }
+
+  function handlePause() {
+    killTimeout();
     setIsRunning(false);
   }
 
@@ -45,24 +50,31 @@ export function TimerCardDisplay({
 
   useEffect(function startTimer() {
     if (isRunning) {
-      intervalIdRef.current = setInterval(() => {
-        setElapsed(prev => prev + 1)
-      }, 1_000);
+      const delay = 1000;
+      const startTime = performance.now();
+      const startElapsed = elapsed;
+      let expected = startTime + delay;
+
+      function tic() {
+        const diff = performance.now() - expected;
+        const now = performance.now();
+        const elapsedSeconds = Math.floor((now - startTime) / delay);
+        setElapsed(startElapsed + elapsedSeconds);
+        expected += delay;
+        const correctedDelay = Math.max(0, delay - diff);
+        timeoutRef.current = setTimeout(tic, correctedDelay);
+      }
+
+      timeoutRef.current = setTimeout(tic, delay);
     }
 
-    return () => {
-      if (intervalIdRef.current) {
-        clearInterval(intervalIdRef.current);
-      }
-    };
+    return () => killTimeout();
   }, [isRunning]);
 
   useEffect(function timerExpired() {
     const totalSeconds = config.minutes * 60;
     if (elapsed >= totalSeconds) {
-      if (intervalIdRef.current) {
-        clearInterval(intervalIdRef.current);
-      }
+      killTimeout();
     }
   }, [config, elapsed]);
 

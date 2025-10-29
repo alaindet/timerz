@@ -5,3 +5,4 @@ and Vite
 
 ## Resources
 - https://levelup.gitconnected.com/deploy-your-vite-app-to-github-pages-a-lazy-devs-guide-37b0b472fa35
+- https://stackoverflow.com/questions/29971898/how-to-create-an-accurate-timer-in-javascript
