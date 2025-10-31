@@ -54,16 +54,18 @@ export function useColorScheme(
 
     // Fallback to default scheme
     return defaultScheme;
+
   }, [selected, localStorage.stored, systemLight, systemDark]);
 
-  function select(colorSchemeOption: ColorSchemeOption) {
-    setSelected(colorSchemeOption);
 
+  function select(colorSchemeOption: ColorSchemeOption) {
     if (colorSchemeOption === COLOR_SCHEME_OPTION.SYSTEM) {
       localStorage.clear();
     } else {
       localStorage.store(colorSchemeOption as ColorScheme);
     }
+
+    setSelected(colorSchemeOption);
   }
 
   return {
