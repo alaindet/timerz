@@ -45,10 +45,12 @@ export function useLocalStorage<T extends any>({
   function store(value: T): void {
     const serializedValue = serialize ? serialize(value) : (value as string);
     window.localStorage.setItem(key, serializedValue);
+    setStored(value);
   }
 
   function clear(): void {
     window.localStorage.removeItem(key);
+    setStored(null);
   }
 
   function exists(): boolean {

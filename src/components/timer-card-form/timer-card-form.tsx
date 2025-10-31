@@ -199,7 +199,7 @@ export function TimerCardForm({
               minutesControl.hasAnyError('min', 'max')
             ) && (
               <div className="error-message">
-                Must be between 1 and 120
+                Must be between 1 and 240
               </div>
             )}
           </div>
@@ -207,7 +207,7 @@ export function TimerCardForm({
         </div>
         <div className="form-controls-row">
 
-          {/* TODO: Color */}
+          {/* Color */}
           <div className="form-control">
             <RadioButtonGroup
               id="field-color"
