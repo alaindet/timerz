@@ -5,6 +5,7 @@ export const THEME_COLOR_NAME = {
   TEAL: 'Teal',
   PURPLE: 'Purple',
   YELLOW: 'Yellow',
+  NONE: 'None',
 } as const;
 
 export type ThemeColorName = typeof THEME_COLOR_NAME[

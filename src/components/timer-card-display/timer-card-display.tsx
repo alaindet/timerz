@@ -110,6 +110,11 @@ export function TimerCardDisplay({
       '--seven-segments-digit-on': cssText,
       '--seven-segments-digit-off': cssText,
       '--seven-segments-digit-off-opacity': 0.07,
+
+      '--tmz-button-color-background': cssBackground,
+      '--tmz-button-color-text': cssText,
+      '--tmz-button-hover-color-background': cssText,
+      '--tmz-button-hover-color-text': cssBackground,
     };
   }, [config]);
 

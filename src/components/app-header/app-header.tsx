@@ -12,8 +12,8 @@ export function AppHeader({
 }: AppHeaderProps) {
   return (
     <>
-      <h1 className="app-title">Timerz</h1>
-      <div className="header-controls">
+      <h1 className="header__title">Timerz</h1>
+      <div className="header__right">
         <ThemeSwitcher
           value={colorScheme}
           onChange={onColorSchemeChange}
