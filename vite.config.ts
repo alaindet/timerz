@@ -6,7 +6,11 @@ import { VitePWA } from 'vite-plugin-pwa';
 export default defineConfig({
   base: '/timerz/',
   plugins: [
-    react(),
+    react({
+      babel: {
+        plugins: ['babel-plugin-react-compiler'],
+      },
+    }),
     VitePWA({
       registerType: 'autoUpdate', // Service worker registration automatically
       manifest: {

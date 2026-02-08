@@ -98,21 +98,19 @@ export function TimerCardDisplay({
     };
   }, [config, elapsed]);
 
-  const cssStyle = useMemo(() => {
-    return {
-      backgroundColor: config.theme.cssBackground,
-      color: config.theme.cssText,
-      '--seven-segments-digit-background': config.theme.cssBackground,
-      '--seven-segments-digit-on': config.theme.cssText,
-      '--seven-segments-digit-off': config.theme.cssText,
-      '--seven-segments-digit-off-opacity': 0.07,
+  const cssStyle = {
+    backgroundColor: config.theme.cssBackground,
+    color: config.theme.cssText,
+    '--seven-segments-digit-background': config.theme.cssBackground,
+    '--seven-segments-digit-on': config.theme.cssText,
+    '--seven-segments-digit-off': config.theme.cssText,
+    '--seven-segments-digit-off-opacity': 0.07,
 
-      '--tmz-button-color-background': config.theme.cssBackground,
-      '--tmz-button-color-text': config.theme.cssText,
-      '--tmz-button-hover-color-background': config.theme.cssText,
-      '--tmz-button-hover-color-text': config.theme.cssBackground,
-    };
-  }, [config]);
+    '--tmz-button-color-background': config.theme.cssBackground,
+    '--tmz-button-color-text': config.theme.cssText,
+    '--tmz-button-hover-color-background': config.theme.cssText,
+    '--tmz-button-hover-color-text': config.theme.cssBackground,
+  };
 
   return (
     <div
