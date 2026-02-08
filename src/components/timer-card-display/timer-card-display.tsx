@@ -99,22 +99,18 @@ export function TimerCardDisplay({
   }, [config, elapsed]);
 
   const cssStyle = useMemo(() => {
-    const color = config.color.toLowerCase();
-    const cssBackground = `var(--tmz-color-${color})`;
-    const cssText = `var(--tmz-color-${color}-text)`;
-
     return {
-      backgroundColor: cssBackground,
-      color: cssText,
-      '--seven-segments-digit-background': cssBackground,
-      '--seven-segments-digit-on': cssText,
-      '--seven-segments-digit-off': cssText,
+      backgroundColor: config.theme.cssBackground,
+      color: config.theme.cssText,
+      '--seven-segments-digit-background': config.theme.cssBackground,
+      '--seven-segments-digit-on': config.theme.cssText,
+      '--seven-segments-digit-off': config.theme.cssText,
       '--seven-segments-digit-off-opacity': 0.07,
 
-      '--tmz-button-color-background': cssBackground,
-      '--tmz-button-color-text': cssText,
-      '--tmz-button-hover-color-background': cssText,
-      '--tmz-button-hover-color-text': cssBackground,
+      '--tmz-button-color-background': config.theme.cssBackground,
+      '--tmz-button-color-text': config.theme.cssText,
+      '--tmz-button-hover-color-background': config.theme.cssText,
+      '--tmz-button-hover-color-text': config.theme.cssBackground,
     };
   }, [config]);
 
