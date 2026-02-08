@@ -57,23 +57,15 @@
   justify-content: center;
   gap: 0.5rem;
   padding: 0.33rem 1rem;
-  width: 6.875rem;
 }
 
 .color-option-swatch {
-  border: 1px solid transparent;
   width: 24px;
   height: 24px;
   border-radius: 8px;
-}
-
-.color-option-swatch.--green { background-color: var(--tmz-color-green); }
-.color-option-swatch.--blue { background-color: var(--tmz-color-blue); }
-.color-option-swatch.--red { background-color: var(--tmz-color-red); }
-.color-option-swatch.--teal { background-color: var(--tmz-color-teal); }
-.color-option-swatch.--purple { background-color: var(--tmz-color-purple); }
-.color-option-swatch.--yellow { background-color: var(--tmz-color-yellow); }
-
-.color-option[aria-checked="true"] .color-option-swatch {
-  border-color: var(--tmz-color-background);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-family: monospace;
 }

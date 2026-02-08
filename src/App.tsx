@@ -24,7 +24,7 @@ export default function App() {
         />
       </header>
       <main>
-        <AppTimers max={8} />
+        <AppTimers max={12} />
       </main>
     </div>
   );

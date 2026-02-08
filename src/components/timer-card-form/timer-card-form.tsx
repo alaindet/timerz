@@ -3,8 +3,8 @@ import { FaCompress, FaExpand, FaFloppyDisk, FaTrashCan, FaXmark } from 'react-i
 import clsx from 'clsx';
 
 import { useFormControl } from '../../hooks';
-import { THEME_COLOR_NAME } from '../../theme/color';
-import type { TimerConfig } from '../../types';
+import { TIMER_THEME } from '../../theme/theme';
+import type { TimerConfig, TimerTheme } from '../../types';
 import { validateMax, validateMaxLength, validateMin, validateMinLength, validateRequired } from '../../validators';
 import { RadioButtonGroup } from '../radio-button/radio-button-group';
 import './timer-card-form.css';
@@ -53,27 +53,27 @@ export function TimerCardForm({
     ],
   });
 
-  const colorControl = useFormControl({
-    id: 'color',
-    initialValue: config.color,
+  const themeControl = useFormControl({
+    id: 'theme',
+    initialValue: config.theme.value,
     validators: [
       validateRequired,
     ],
   });
 
-  const handleColorControlChange = useCallback(
-    (option: string) => colorControl.setValue(option),
-    [colorControl],
+  const handleThemeControlChange = useCallback(
+    (option: string) => themeControl.setValue(option),
+    [themeControl],
   );
 
   const isValid = useMemo(() => (
     nameControl.valid &&
     minutesControl.valid &&
-    colorControl.valid
+    themeControl.valid
   ), [
     nameControl.valid,
     minutesControl.valid,
-    colorControl.valid,
+    themeControl.valid,
   ]);
 
   function handleSubmit(event: FormEvent) {
@@ -87,11 +87,13 @@ export function TimerCardForm({
       return;
     }
 
+    const theme: TimerTheme = TIMER_THEME[themeControl.value];
+
     const newConfig: TimerConfig = {
       id: config.id,
       name: nameControl.value,
       minutes: +minutesControl.value,
-      color: colorControl.value,
+      theme,
     };
 
     onSave(newConfig);
@@ -207,38 +209,36 @@ export function TimerCardForm({
         </div>
         <div className="form-controls-row">
 
-          {/* Color */}
+          {/* Theme */}
           <div className="form-control">
             <RadioButtonGroup
               id="field-color"
-              value={colorControl.value}
+              value={themeControl.value}
               stacked
-              onChange={handleColorControlChange}
+              onChange={handleThemeControlChange}
             >
               <RadioButtonGroup.Title>
-                <label htmlFor="field-color">Color</label>
+                <label htmlFor="field-theme">Theme</label>
               </RadioButtonGroup.Title>
-              {Object.values(THEME_COLOR_NAME).map(color => (
+              {Object.entries(TIMER_THEME).map(([key, theme]) => (
                 <RadioButtonGroup.Option
-                  key={color}
-                  id={color}
-                  value={color}
+                  key={key}
+                  id={key}
+                  value={key}
                   className="color-option"
                 >
-                  <div
-                    className={clsx(
-                      'color-option-swatch',
-                      `--${color.toLowerCase()}`
-                    )}
-                  ></div>
-                  {color}
+                  <div className="color-option-swatch" style={{
+                    backgroundColor: theme.cssBackground,
+                    color: theme.cssText,
+                  }}>42</div>
+                  {theme.label}
                 </RadioButtonGroup.Option>
               ))}
             </RadioButtonGroup>
 
             {(
-              colorControl.touched &&
-              colorControl.hasError('required')
+              themeControl.touched &&
+              themeControl.hasError('required')
             ) && (
               <div className="error-message">
                 Required
