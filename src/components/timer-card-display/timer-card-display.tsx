@@ -28,6 +28,8 @@ export function TimerCardDisplay({
   const [isRunning, setIsRunning] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  const isPaused = useMemo(() => !isRunning && elapsed > 0, [isRunning, elapsed]);
+
   const isExpired = useMemo(() => {
     const totalSeconds = config.minutes * 60;
     return totalSeconds - elapsed <= 0;
@@ -120,6 +122,7 @@ export function TimerCardDisplay({
         '--maximize-timer': isMaximized,
         '--running': isRunning,
         '--expired': isExpired,
+        '--paused': isPaused,
       })}
     >
       <div className="timer-card-display__header">
