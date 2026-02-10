@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { isTimerEmpty } from '../../functions';
 import { type TimerConfig } from '../../types';
@@ -14,26 +14,32 @@ export type TimerCardProps = {
 export function TimerCard(props: TimerCardProps) {
   const [isEditing, setIsEditing] = useState(isTimerEmpty(props.config));
   const [isMaximized, setIsMaximized] = useState(false);
+  const [config, setConfig] = useState<TimerConfig>(props.config);
 
   const onRemove = useCallback(
     () => props.onRemove(props.config.id),
     [props.config],
   );
 
-  const handleStartEditing = useCallback(() => setIsEditing(true), []);
+  const handleStartEditing = useCallback((elapsedSeconds: number) => {
+    setIsEditing(true);
+    setConfig(prev => ({ ...prev, elapsedSeconds }));
+  }, []);
+
   const handleCancelEditing = useCallback(() => setIsEditing(false), []);
   const handleMaximizeSize = useCallback(() => setIsMaximized(true), []);
   const handleCompressSize = useCallback(() => setIsMaximized(false), []);
 
-  const handleSaveTimer = useCallback((config: TimerConfig) => {
-    props.onUpdate(config);
+  const handleSaveTimer = useCallback((newConfig: TimerConfig) => {
+    props.onUpdate(newConfig);
+    setConfig(newConfig);
     setIsEditing(false);
   }, [props.onUpdate]);
 
   if (isEditing) {
     return (
       <TimerCardForm
-        config={props.config}
+        config={config}
         isMaximized={isMaximized}
         onMaximizeSize={handleMaximizeSize}
         onCompressSize={handleCompressSize}
@@ -46,7 +52,7 @@ export function TimerCard(props: TimerCardProps) {
 
   return (
     <TimerCardDisplay
-      config={props.config}
+      config={config}
       isMaximized={isMaximized}
       onMaximizeSize={handleMaximizeSize}
       onCompressSize={handleCompressSize}

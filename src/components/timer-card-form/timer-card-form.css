@@ -44,11 +44,31 @@
   align-items: flex-start;
   gap: 1rem;
   flex-wrap: wrap;
+}
 
-  > .form-control {
-    flex: 1;
-    padding: 0.5rem;
-  }
+.form-control {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+  padding: 0.5rem;
+}
+
+.checkbox {
+  display: inline-block;
+  width: fit-content;
+  padding: 0.33rem;
+  cursor: pointer;
+  border: 1px solid var(--tmz-color-text-muted);
+  border-radius: 4px;
+}
+
+.checkbox:hover {
+  background-color: var(--tmz-color-background-alt);
+}
+
+.checkbox-label {
+  padding-left: 0.5rem;
 }
 
 .color-option {
