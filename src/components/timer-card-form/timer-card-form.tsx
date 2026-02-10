@@ -1,13 +1,14 @@
-import { useCallback, useMemo, type FormEvent } from 'react';
+import { useCallback, useEffect, useMemo, type FormEvent } from 'react';
 import { FaCompress, FaExpand, FaFloppyDisk, FaTrashCan, FaXmark } from 'react-icons/fa6';
 import clsx from 'clsx';
 
 import { useFormControl } from '../../hooks';
 import { TIMER_THEME } from '../../theme/theme';
 import type { TimerConfig, TimerTheme } from '../../types';
-import { validateMax, validateMaxLength, validateMin, validateMinLength, validateRequired } from '../../validators';
+import { validateFlag, validateMax, validateMaxLength, validateMin, validateMinLength, validateRequired } from '../../validators';
 import { RadioButtonGroup } from '../radio-button/radio-button-group';
 import './timer-card-form.css';
+import { parseDuration } from '../../functions';
 
 export type TimerCardFormProps = {
   config: TimerConfig;
@@ -61,6 +62,15 @@ export function TimerCardForm({
     ],
   });
 
+  const preserveElapsedControl = useFormControl({
+    id: 'preserveEnabled',
+    initialValue: true,
+    validators: [
+      validateRequired,
+      validateFlag,
+    ],
+  });
+
   const handleThemeControlChange = useCallback(
     (option: string) => themeControl.setValue(option),
     [themeControl],
@@ -69,11 +79,13 @@ export function TimerCardForm({
   const isValid = useMemo(() => (
     nameControl.valid &&
     minutesControl.valid &&
-    themeControl.valid
+    themeControl.valid &&
+    preserveElapsedControl.valid
   ), [
     nameControl.valid,
     minutesControl.valid,
     themeControl.valid,
+    preserveElapsedControl.valid,
   ]);
 
   function handleSubmit(event: FormEvent) {
@@ -89,10 +101,19 @@ export function TimerCardForm({
 
     const theme: TimerTheme = TIMER_THEME[themeControl.value];
 
+    console.log('debug form', {
+      preserve: preserveElapsedControl.value,
+      elapsedBefore: config.elapsedSeconds,
+      elapsedAfter: preserveElapsedControl.value ? config.elapsedSeconds : 0,
+    });
+
     const newConfig: TimerConfig = {
       id: config.id,
       name: nameControl.value,
       minutes: +minutesControl.value,
+      elapsedSeconds: preserveElapsedControl.value
+        ? config.elapsedSeconds
+        : 0,
       theme,
     };
 
@@ -148,7 +169,7 @@ export function TimerCardForm({
 
           {/* Name */}
           <div className="form-control">
-            <label htmlFor="field-name">Name</label>
+            <label htmlFor={'field-name-' + config.id}>Name</label>
             <input
               type="text"
               id="field-name"
@@ -178,7 +199,7 @@ export function TimerCardForm({
 
           {/* Minutes */}
           <div className="form-control">
-            <label htmlFor="field-minutes">Minutes</label>
+            <label htmlFor={'field-minutes-' + config.id}>Minutes</label>
             <input
               type="number"
               id="field-minutes"
@@ -207,12 +228,54 @@ export function TimerCardForm({
           </div>
 
         </div>
+        {config.elapsedSeconds > 0 && (
+          <div className="form-control-rows">
+
+            {/* Flag: Preseve elapsed time */}
+            <div className="form-control">
+              <label
+                htmlFor={'field-preserve-elapsed-' + config.id}
+                className="checkbox"
+              >
+                <input
+                  type="checkbox"
+                  id="field-preserve-elapsed"
+                  checked={preserveElapsedControl.value}
+                  onChange={preserveElapsedControl.onToggle}
+                />
+                <span className="checkbox-label" onClick={preserveElapsedControl.onToggle}>
+                  Preserve elapsed time?
+                  ({parseDuration.natural(config.elapsedSeconds)})
+                </span>
+              </label>
+
+              {(
+                preserveElapsedControl.touched &&
+                preserveElapsedControl.hasError('required')
+              ) && (
+                <div className="error-message">
+                  Required
+                </div>
+              )}
+
+              {(
+                preserveElapsedControl.touched &&
+                preserveElapsedControl.hasError('flag')
+              ) && (
+                <div className="error-message">
+                  Must be a boolean flag
+                </div>
+              )}
+            </div>
+
+          </div>
+        )}
         <div className="form-controls-row">
 
           {/* Theme */}
           <div className="form-control">
             <RadioButtonGroup
-              id="field-color"
+              id={'field-color-' + config.id}
               value={themeControl.value}
               stacked
               onChange={handleThemeControlChange}
@@ -222,8 +285,8 @@ export function TimerCardForm({
               </RadioButtonGroup.Title>
               {Object.entries(TIMER_THEME).map(([key, theme]) => (
                 <RadioButtonGroup.Option
-                  key={key}
-                  id={key}
+                  key={key + config.id}
+                  id={key + config.id}
                   value={key}
                   className="color-option"
                 >

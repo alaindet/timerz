@@ -30,6 +30,16 @@ export function useFormControl<T extends any = any>({
     setValue(value);
   }
 
+  function onToggle(event: ChangeEvent<any>) {
+    setTouched(true);
+    setValue(value => {
+      if (typeof value === 'boolean') {
+        return !value as T;
+      }
+      return value;
+    });
+  }
+
   function reset() {
     setValue(initialValue);
     setTouched(false);
@@ -67,6 +77,7 @@ export function useFormControl<T extends any = any>({
     valid,
 
     onChange,
+    onToggle,
     hasError,
     hasAnyError,
     setValue,

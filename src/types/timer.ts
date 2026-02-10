@@ -9,5 +9,6 @@ export type TimerConfig = {
   id: string;
   name: string;
   minutes: number;
+  elapsedSeconds: number;
   theme: TimerTheme;
 };

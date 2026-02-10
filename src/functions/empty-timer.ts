@@ -1,25 +1,16 @@
-import type { TimerConfig, TimerTheme } from '../types/timer';
-
-const EMPTY_TIMER_THEME: TimerTheme = {
-  value: '',
-  label: '',
-  cssBackground: '',
-  cssText: '',
-};
+import { TIMER_THEME } from '../theme/theme';
+import type { TimerConfig } from '../types/timer';
 
 export function createEmptyTimer(): TimerConfig {
   return {
     id: String(Math.random()).slice(2),
     name: '',
-    theme: { ...EMPTY_TIMER_THEME },
-    minutes: 0,
+    elapsedSeconds: 0,
+    theme: { ...TIMER_THEME.transparent },
+    minutes: 60,
   };
 }
 
 export function isTimerEmpty(timer: TimerConfig): boolean {
-  return (
-    timer.name === '' &&
-    timer.theme.value === EMPTY_TIMER_THEME.value &&
-    timer.minutes === 0
-  );
+  return timer.name === '';
 }

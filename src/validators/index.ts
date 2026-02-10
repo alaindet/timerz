@@ -1,4 +1,5 @@
 export * from './create-validator';
+export * from './flag';
 export * from './max-length';
 export * from './max';
 export * from './min-length';

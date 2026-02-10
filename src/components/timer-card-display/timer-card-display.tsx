@@ -12,7 +12,7 @@ export type TimerCardDisplayProps = {
   isMaximized: boolean;
   onMaximizeSize: () => void;
   onCompressSize: () => void;
-  onStartEditing: () => void;
+  onStartEditing: (elapsed: number) => void;
   onRemove: () => void;
 };
 
@@ -24,7 +24,7 @@ export function TimerCardDisplay({
   onStartEditing,
   onRemove,
 }: TimerCardDisplayProps) {
-  const [elapsed, setElapsed] = useState(0);
+  const [elapsed, setElapsed] = useState(config.elapsedSeconds);
   const [isRunning, setIsRunning] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -48,6 +48,11 @@ export function TimerCardDisplay({
 
   function handlePlay() {
     setIsRunning(true);
+  }
+
+  function handleStartEditing() {
+    handlePause();
+    onStartEditing(elapsed);
   }
 
   useEffect(function startTimer() {
@@ -144,7 +149,7 @@ export function TimerCardDisplay({
         )}
 
         {/* Button: Edit */}
-        <button type="button" onClick={onStartEditing}>
+        <button type="button" onClick={handleStartEditing}>
           <FaPen /> Edit
         </button>
 
