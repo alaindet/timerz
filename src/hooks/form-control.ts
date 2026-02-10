@@ -30,7 +30,7 @@ export function useFormControl<T extends any = any>({
     setValue(value);
   }
 
-  function onToggle(event: ChangeEvent<any>) {
+  function onToggle() {
     setTouched(true);
     setValue(value => {
       if (typeof value === 'boolean') {

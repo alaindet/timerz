@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import { isTimerEmpty } from '../../functions';
 import { type TimerConfig } from '../../types';

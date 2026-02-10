@@ -1,14 +1,14 @@
-import { useCallback, useEffect, useMemo, type FormEvent } from 'react';
-import { FaCompress, FaExpand, FaFloppyDisk, FaTrashCan, FaXmark } from 'react-icons/fa6';
 import clsx from 'clsx';
+import { useCallback, useMemo, type FormEvent } from 'react';
+import { FaCompress, FaExpand, FaFloppyDisk, FaTrashCan, FaXmark } from 'react-icons/fa6';
 
+import { parseDuration } from '../../functions';
 import { useFormControl } from '../../hooks';
 import { TIMER_THEME } from '../../theme/theme';
 import type { TimerConfig, TimerTheme } from '../../types';
 import { validateFlag, validateMax, validateMaxLength, validateMin, validateMinLength, validateRequired } from '../../validators';
 import { RadioButtonGroup } from '../radio-button/radio-button-group';
 import './timer-card-form.css';
-import { parseDuration } from '../../functions';
 
 export type TimerCardFormProps = {
   config: TimerConfig;
